@@ -1,15 +1,15 @@
 // Assignment code here
 const lowerCharCodes = arrayMinToMax (97,122);
 const upperCharCodes = arrayMinToMax (65,90);
-const symbolCharCodes = arrayMinToMax (33,47).concat(arrayMinToMax (58,64)).concat(arrayMinToMax(91.96)).concat(arrayMinToMax(123,126));
 const numberCharCodes = arrayMinToMax (48,57);
+const symbolCharCodes = arrayMinToMax (33,47).concat(arrayMinToMax (58,64)).concat(arrayMinToMax(91.96)).concat(arrayMinToMax(123,126));
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 
 // Write password to the #password input
-function writePassword(charAmount, includeLowercase, includeUppercase, includeNumbers, includeSymbols) {
+function writePassword(includeLowercase, includeUppercase, includeNumbers, includeSymbols, charAmount) {
   var passwordText = document.querySelector("#password");
   
   var charAmount = parseInt(prompt('How many characters would you like to include in your password? (8-128)'));
@@ -31,10 +31,10 @@ function writePassword(charAmount, includeLowercase, includeUppercase, includeNu
   var includeSymbols = symbolConfirm.value
   var password = generatePassword(charAmount, includeLowercase, includeUppercase, includeNumbers, includeSymbols);
   
-  passwordText.value = password;
+  passwordText.innerText = password;
 };
 
-function generatePassword(charAmount, includeLowercase, includeUppercase, includeNumbers, includeSymbols) {
+function generatePassword(includeLowercase, includeUppercase, includeNumbers, includeSymbols, charAmount) {
   let charCodes = '';
   if (includeLowercase) charCodes = charCodes.concat(lowerCharCodes);
   if (includeUppercase) charCodes = charCodes.concat(upperCharCodes);
@@ -44,7 +44,8 @@ function generatePassword(charAmount, includeLowercase, includeUppercase, includ
   const passwordCharacters = []
   for (var i = 0;i < charAmount; i++) {
     var randomNumber = charCodes[Math.floor(Math.random() * charCodes.length)];
-    passwordCharacters.push(JSON.stringify(randomNumber));
+    passwordCharacters.push(String.fromCharCode(randomNumber));
+    console.log(passwordCharacters)
   };
   return passwordCharacters.join('')
 };
@@ -58,4 +59,6 @@ function arrayMinToMax(min,max) {
 };
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword) ;
+generateBtn.addEventListener("click", writePassword);
+
+
